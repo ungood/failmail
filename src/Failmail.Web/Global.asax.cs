@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Raven.Client.Document;
 
 namespace Failmail.Web
 {
@@ -26,7 +27,6 @@ namespace Failmail.Web
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
-
         }
 
         protected void Application_Start()
@@ -35,6 +35,8 @@ namespace Failmail.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            var store = new DocumentStore();
         }
     }
 }
