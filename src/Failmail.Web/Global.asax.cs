@@ -21,6 +21,7 @@ namespace Failmail.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("favicon.ico");
 
             routes.MapRoute(
                 "Default", // Route name
@@ -35,8 +36,6 @@ namespace Failmail.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            var store = new DocumentStore();
         }
     }
 }

@@ -11,17 +11,10 @@ namespace Failmail.Web.Controllers
 {
     public class AccountController : Controller
     {
-
-        //
-        // GET: /Account/LogOn
-
         public ActionResult LogOn()
         {
             return View();
         }
-
-        //
-        // POST: /Account/LogOn
 
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
@@ -51,9 +44,6 @@ namespace Failmail.Web.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Account/LogOff
-
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -61,16 +51,10 @@ namespace Failmail.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/Register
-
         public ActionResult Register()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Register
 
         [HttpPost]
         public ActionResult Register(RegisterModel model)

@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="ImageRetriever.cs" />
     <Compile Include="Model\ImageCache.cs" />
     <Compile Include="RavenImageResizerPlugin.cs" />

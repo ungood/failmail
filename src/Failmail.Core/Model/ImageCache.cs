@@ -20,7 +20,7 @@ namespace Failmail.Core.Model
 
         public static string CreateId(string bucket, string tag, string seed)
         {
-            return string.Format("cache/{0}/{1}-{2}", bucket, tag,)
+            return string.Format("cache/{0}/{1}-{2}", bucket, tag, seed);
         }
     }
 }

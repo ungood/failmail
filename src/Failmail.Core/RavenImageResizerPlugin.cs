@@ -54,11 +54,12 @@ namespace Failmail.Core
             if(string.IsNullOrWhiteSpace("seed"))
                 seed = Guid.NewGuid().ToString();
 
-            using(var session = store.OpenSession())
-            {
-                session.Query<Image>()
-                    .Where(img => img.
-            }
+            //using(var session = store.OpenSession())
+            //{
+            //    session.Query<Image>()
+            //        .Where(img => img.
+            //}
+            return false;
         }
 
         public IVirtualFile GetFile(string virtualPath, NameValueCollection queryString)

@@ -31,6 +31,8 @@ namespace Failmail.Core
                 var attachment = session.Advanced.DatabaseCommands.GetAttachment(cache.AttachmentKey);
                 attachment.Data();
             }
+
+            return null;
         }
 
         public Stream GetRandomImage(string bucket, string tag)
