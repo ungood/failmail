@@ -1,0 +1,25 @@
+﻿@model UploadModel
+
+@{
+    ViewBag.Title = "Upload New Image";
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <legend>New Image Upload</legend>
+        
+        <ul>
+            <li>
+                <input type="file" name="file" />
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Tags)
+                @Html.TextBoxFor(m => m.Tags)
+            </li>
+        </ul>
+        
+        @Html.ValidationSummary()
+        <input type="submit" value="Upload"/>
+    </fieldset>
+}

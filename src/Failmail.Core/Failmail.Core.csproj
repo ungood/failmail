@@ -60,11 +60,11 @@
   <ItemGroup>
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="ImageRetriever.cs" />
-    <Compile Include="Model\ImageCache.cs" />
+    <Compile Include="Indexes\TagCloudIndex.cs" />
+    <Compile Include="Model\CachedImage.cs" />
+    <Compile Include="Model\Tag.cs" />
     <Compile Include="RavenImageResizerPlugin.cs" />
-    <Compile Include="Model\Bucket.cs" />
     <Compile Include="Model\Image.cs" />
-    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

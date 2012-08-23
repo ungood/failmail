@@ -18,26 +18,57 @@ namespace Failmail.Core
             this.store = store;
         }
 
-        public Stream GetImage(string bucket, string tag, string seed)
+        public Stream GetImage(string tag, string seed)
         {
-            if(string.IsNullOrWhiteSpace(seed))
-                return GetRandomImage(bucket, tag);
-
-
-
             using(var session = store.OpenSession())
             {
-                var cache = session.Load<ImageCache>("");
-                var attachment = session.Advanced.DatabaseCommands.GetAttachment(cache.AttachmentKey);
-                attachment.Data();
-            }
+                if (string.IsNullOrWhiteSpace(seed))
+                {
+                    var image = GetRandomImage(session, tag);
+                    return GetAttachment(session, image.AttachmentKey);
+                }
 
-            return null;
+                var cached = GetCachedImage(session, tag, seed);
+                if(cached != null)
+                {
+                    return GetAttachment(session, cached.AttachmentKey);
+                }
+
+                var randomImage = GetRandomImage(session, tag);
+                SaveCachedImage(session, randomImage, tag, seed);
+                return GetAttachment(session, randomImage.AttachmentKey);
+            }
         }
 
-        public Stream GetRandomImage(string bucket, string tag)
+        private CachedImage GetCachedImage(IDocumentSession session, string tag, string seed)
         {
-            throw new NotImplementedException();
+            var id = CachedImage.CreateId(tag, seed);
+            return session.Load<CachedImage>(id);
+        }
+
+        private Image GetRandomImage(IDocumentSession session, string tag)
+        {
+            return session.Query<Image>()
+                .Customize(q => q.RandomOrdering())
+                .FirstOrDefault(image => image.Tags.Contains(tag));
+        }
+
+        private Stream GetAttachment(IDocumentSession session, string attachmentKey)
+        {
+            var attachment = session.Advanced.DatabaseCommands.GetAttachment(attachmentKey);
+            return attachment.Data();
+        }
+
+        private void SaveCachedImage(IDocumentSession session, Image image, string tag, string seed)
+        {
+            var cachedImage = new CachedImage
+            {
+                Id = CachedImage.CreateId(tag, seed),
+                Tag = tag,
+                Seed = seed,
+                AttachmentKey = image.AttachmentKey
+            };
+            session.Store(cachedImage);
         }
     }
 }

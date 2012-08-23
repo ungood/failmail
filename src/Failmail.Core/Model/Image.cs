@@ -7,7 +7,21 @@ namespace Failmail.Core.Model
 {
     public class Image
     {
-        public Guid Key { get; set; }
+        public string Id { get; set; }
+
+        public string AttachmentKey { get; set; }
+
         public IList<string> Tags { get; set; }
+
+        public Image()
+        {
+            Tags = new List<string>();
+        }
+
+        public Image(string attachmentKey) : this()
+        {
+            Id = "image/" + attachmentKey;
+            AttachmentKey = attachmentKey;
+        }
     }
 }

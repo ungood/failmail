@@ -1,8 +1,22 @@
-﻿@{
+﻿@model HomeModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-</p>
+<h2>Tags</h2>
+
+<ul id="tagCloud">
+    @foreach(var tag in Model.TagClouds)
+    {
+        <li data-weight="@tag.Count">@tag.Name</li>
+    }
+</ul>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tagCloud').awesomeCloud({
+
+        });
+    });
+</script>

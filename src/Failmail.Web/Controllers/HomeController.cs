@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Failmail.Core.Indexes;
+using Failmail.Core.Model;
+using Failmail.Web.Models;
+using Raven.Client;
 
 namespace Failmail.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
+        private readonly IDocumentSession session;
 
-            return View();
+        public HomeController(IDocumentSession session)
+        {
+            this.session = session;
         }
 
-        public ActionResult About()
+        public ActionResult Index()
         {
-            return View();
+            var tagClouds = session.Query<TagCloud, TagCloudIndex>()
+                .OrderByDescending(tag => tag.Count)
+                .Take(64)
+                .ToList();
+
+            return View(new HomeModel
+            {
+                TagClouds = tagClouds
+            });
         }
     }
 }

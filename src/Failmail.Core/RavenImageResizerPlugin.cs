@@ -36,7 +36,7 @@ namespace Failmail.Core
 
         public IEnumerable<string> GetSupportedQuerystringKeys()
         {
-            return new string[] {"bucket", "tag", "seed"};
+            return new string[] {"tag", "seed"};
         }
 
         public bool FileExists(string virtualPath, NameValueCollection queryString)
