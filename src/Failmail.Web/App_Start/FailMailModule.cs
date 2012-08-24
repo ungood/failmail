@@ -20,17 +20,18 @@ namespace Failmail.Web.App_Start
     {
         public override void Load()
         {
-            var store = BindRaven();
-            BindAmazon(store);
+            BindRaven();
+            BindAmazon();
 
             this.BindFilter<RavenSessionFilter>(FilterScope.Global, null);
         }
 
-        private IDocumentStore BindRaven()
+        private void BindRaven()
         {
             var store = new DocumentStore
             {
-                ConnectionStringName = ConfigurationManager.AppSettings["RavenConnectionStringName"],
+                Url = ConfigurationManager.AppSettings["Raven/Url"],
+                ApiKey = ConfigurationManager.AppSettings["Raven/ApiKey"]
             };
             store.Initialize();
             IndexCreation.CreateIndexes(typeof(BucketCountIndex).Assembly, store);
@@ -43,26 +44,16 @@ namespace Failmail.Web.App_Start
             Bind<IDocumentSession>()
                 .ToMethod(ctx => store.OpenSession())
                 .InRequestScope();
-
-            return store;
         }
 
-        private void BindAmazon(IDocumentStore documentStore)
+        private void BindAmazon()
         {
-            var accessKey = ConfigurationManager.AppSettings["AmazonAccessKey"];
-            var secretKey = ConfigurationManager.AppSettings["AmazonSecretKey"];
+            var accessKey = ConfigurationManager.AppSettings["Amazon/AccessKey"];
+            var secretKey = ConfigurationManager.AppSettings["Amazon/SecretKey"];
+            var bucketName = ConfigurationManager.AppSettings["Amazon/S3BucketName"];
 
-            if(string.IsNullOrWhiteSpace(accessKey) || string.IsNullOrWhiteSpace(secretKey))
-            {
-                var imageService = new RavenImageService(documentStore);
-                Bind<IImageService>().ToConstant(imageService);
-            }
-            else
-            {
-                var amazonBucketName = ConfigurationManager.AppSettings["AmazonBucketName"];
-                var imageService = new AmazonImageService(accessKey, secretKey, amazonBucketName);
-                Bind<IImageService>().ToConstant(imageService);
-            }
+            var imageService = new AmazonImageService(accessKey, secretKey, bucketName);
+            Bind<IImageService>().ToConstant(imageService);
         }
     }
 }
