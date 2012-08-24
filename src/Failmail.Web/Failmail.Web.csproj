@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK">
+      <HintPath>..\packages\AWSSDK.1.5.1.0\lib\AWSSDK.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth">
       <HintPath>..\packages\DotNetOpenAuth.3.5.0.12037-refresh3\lib\DotNetOpenAuth.dll</HintPath>
     </Reference>
@@ -94,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="App_Start\RavenModule.cs" />
+    <Compile Include="App_Start\FailMailModule.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BucketController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -111,6 +114,9 @@
     <Compile Include="Indexes\BucketsRecentlyUpdatedIndex.cs" />
     <Compile Include="Models\CachedImage.cs" />
     <Compile Include="RavenImageResizerPlugin.cs" />
+    <Compile Include="Services\AmazonImageService.cs" />
+    <Compile Include="Services\IImageService.cs" />
+    <Compile Include="Services\RavenImageService.cs" />
     <Compile Include="Tasks\BackgroundTask.cs" />
     <Compile Include="Tasks\TaskExecutor.cs" />
     <Compile Include="Tasks\UploadImageTask.cs" />

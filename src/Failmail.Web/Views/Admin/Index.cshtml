@@ -9,7 +9,7 @@
 <ol>
     @foreach(var bucket in Model.MostUsedBuckets)
     {
-        <li> (@bucket.Count)</li>
+        <li>@Html.ActionLink(bucket.Name, "Index", "Bucket", new { bucket = @bucket.Name }) (@bucket.Count)</li>
     }
 </ol>
 
