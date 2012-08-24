@@ -4,19 +4,3 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>Tags</h2>
-
-<ul id="tagCloud">
-    @foreach(var tag in Model.TagClouds)
-    {
-        <li data-weight="@tag.Count">@tag.Name</li>
-    }
-</ul>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#tagCloud').awesomeCloud({
-
-        });
-    });
-</script>

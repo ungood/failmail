@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Failmail.Core.Indexes;
-using Failmail.Core.Model;
-using Failmail.Web.Models;
 using Raven.Client;
 
 namespace Failmail.Web.Controllers
@@ -21,15 +17,7 @@ namespace Failmail.Web.Controllers
 
         public ActionResult Index()
         {
-            var tagClouds = session.Query<TagCloud, TagCloudIndex>()
-                .OrderByDescending(tag => tag.Count)
-                .Take(64)
-                .ToList();
-
-            return View(new HomeModel
-            {
-                TagClouds = tagClouds
-            });
+            return View();
         }
     }
 }

@@ -25,6 +25,11 @@ namespace Failmail.Web
             routes.IgnoreRoute("favicon.ico");
 
             routes.MapRoute(
+                "BucketRoute",
+                "b/{bucket}/{action}",
+                new {controller = "Bucket", action = "Index"});
+
+            routes.MapRoute(
                 "RandomImageRoute",
                 "random/{tag}/{seed}",
                 new {controller = "RandomImage", action = "Index", seed=UrlParameter.Optional});

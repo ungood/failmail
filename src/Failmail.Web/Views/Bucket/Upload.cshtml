@@ -1,0 +1,22 @@
+﻿@model BucketViewModel
+
+@{
+    ViewBag.Title = "Upload Image to " + @Model.BucketName;
+}
+
+@section Menu
+{
+    @Html.Partial("Menu")
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <legend>New Image Upload</legend>
+        
+        <input type="file" name="file" />
+        
+        @Html.ValidationSummary()
+        <input type="submit" value="Upload"/>
+    </fieldset>
+}

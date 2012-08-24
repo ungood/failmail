@@ -1,0 +1,23 @@
+﻿@model AdminIndexViewModel
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Most Used Buckets</h2>
+
+<ol>
+    @foreach(var bucket in Model.MostUsedBuckets)
+    {
+        <li> (@bucket.Count)</li>
+    }
+</ol>
+
+<h2>Recently Updated Buckets</h2>
+
+<ol>
+    @foreach(var bucket in Model.RecentlyUpdatedBuckets)
+    {
+        <li>@Html.ActionLink(bucket.Name, "Index", "Bucket", new { bucket = @bucket.Name }) (@bucket.UpdatedDate.ToString())</li>
+    }
+</ol>
