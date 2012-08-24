@@ -4,7 +4,7 @@ obj
 packages
 
 #Contains secrets!
-Web.Debug.config
+secret.txt
 
 # mstest test results
 TestResults## Ignore Visual Studio temporary files, build results, and

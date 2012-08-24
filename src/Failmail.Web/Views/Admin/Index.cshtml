@@ -9,7 +9,7 @@
 <ol>
     @foreach(var bucket in Model.MostUsedBuckets)
     {
-        <li>@Html.ActionLink(bucket.Name, "Index", "Bucket", new { bucket = @bucket.Name }) (@bucket.Count)</li>
+        <li>@Html.ActionLink(bucket.Name, "Index", "Bucket", new { bucket = @bucket.Name }, null) (@bucket.Count)</li>
     }
 </ol>
 
@@ -18,6 +18,6 @@
 <ol>
     @foreach(var bucket in Model.RecentlyUpdatedBuckets)
     {
-        <li>@Html.ActionLink(bucket.Name, "Index", "Bucket", new { bucket = @bucket.Name }) (@bucket.UpdatedDate.ToString())</li>
+        <li>@Html.ActionLink(bucket.Name, "Index", "Bucket", new { bucket = @bucket.Name }, null) (@bucket.UpdatedDate.ToString())</li>
     }
 </ol>

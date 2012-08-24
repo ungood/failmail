@@ -8,6 +8,7 @@ namespace Failmail.Web.Services
 {
     public interface IImageService
     {
-        void StoreImage(string imageBucket, string fileKey, Stream imageStream);
+        string GetExtension(Stream imageStream);
+        string StoreImage(string imageBucket, string imageExtension, Stream imageStream);
     }
 }

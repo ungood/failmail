@@ -20,6 +20,7 @@ namespace Failmail.Web.App_Start
     {
         public override void Load()
         {
+            AppSettings.FillSecrets();
             BindRaven();
             BindAmazon();
 
@@ -30,13 +31,12 @@ namespace Failmail.Web.App_Start
         {
             var store = new DocumentStore
             {
-                Url = ConfigurationManager.AppSettings["Raven/Url"],
-                ApiKey = ConfigurationManager.AppSettings["Raven/ApiKey"]
+                Url = AppSettings.Get("Raven/Url"),
+                ApiKey = AppSettings.Get("Raven/ApiKey"),
+                DefaultDatabase = AppSettings.Get("Raven/Database")
             };
             store.Initialize();
             IndexCreation.CreateIndexes(typeof(BucketCountIndex).Assembly, store);
-
-            TaskExecutor.DocumentStore = store;
 
             Bind<IDocumentStore>()
                 .ToConstant(store);
@@ -48,9 +48,9 @@ namespace Failmail.Web.App_Start
 
         private void BindAmazon()
         {
-            var accessKey = ConfigurationManager.AppSettings["Amazon/AccessKey"];
-            var secretKey = ConfigurationManager.AppSettings["Amazon/SecretKey"];
-            var bucketName = ConfigurationManager.AppSettings["Amazon/S3BucketName"];
+            var accessKey = AppSettings.Get("Amazon/AccessKey");
+            var secretKey = AppSettings.Get("Amazon/SecretKey");
+            var bucketName = AppSettings.Get("Amazon/S3Bucket");
 
             var imageService = new AmazonImageService(accessKey, secretKey, bucketName);
             Bind<IImageService>().ToConstant(imageService);

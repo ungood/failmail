@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Failmail.Web.Services;
 using Failmail.Web.Tasks;
 using Failmail.Web.ViewModels;
 
@@ -10,6 +11,13 @@ namespace Failmail.Web.Controllers
 {
     public class BucketController : Controller
     {
+        private readonly UploadImageTaskFactory uploadImageTaskFactory;
+        
+        public BucketController(UploadImageTaskFactory uploadImageTaskFactory)
+        {
+            this.uploadImageTaskFactory = uploadImageTaskFactory;
+        }
+
         public ActionResult Index(string bucket)
         {
             return View(new BucketViewModel
@@ -29,15 +37,16 @@ namespace Failmail.Web.Controllers
         [HttpPost]
         public ActionResult Upload(string bucket, BucketViewModel model, HttpPostedFileBase file)
         {
-            if (file == null || file.ContentLength < 1)
+            try
             {
-                ModelState.AddModelError("File", "You must upload an image file.");
+                uploadImageTaskFactory.StartNew(bucket, file);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("file", ex.Message);
                 return View(model);
             }
-
-            var task = new UploadImageTask(bucket, file.InputStream);
-            TaskExecutor.ExecuteTask(task);
-
+            
             return RedirectToAction("Index");
         }
     }
