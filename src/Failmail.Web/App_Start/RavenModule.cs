@@ -37,7 +37,7 @@ namespace Failmail.Web.App_Start
         {
             var store = new DocumentStore
             {
-                ConnectionStringName = "Raven" + ConfigurationManager.AppSettings["Environment"]
+                ConnectionStringName = ConfigurationManager.AppSettings["RavenConnectionStringName"]
             };
             store.Initialize();
             IndexCreation.CreateIndexes(typeof(BucketCountIndex).Assembly, store);
